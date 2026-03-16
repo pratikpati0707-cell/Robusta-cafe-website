@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robusta Cafe — Hinjawadi, Pune</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --cream: #F7F2E8;
+    --espresso: #2C1A0E;
+    --brown: #5C3317;
+    --caramel: #C47D3B;
+    --gold: #D4A853;
+    --light: #FDF9F3;
+    --steam: #8B6B4A;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--espresso);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--espresso);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 64px;
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold); letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: #ccc; text-decoration: none; font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--caramel); color: white; border: none;
+    padding: 8px 20px; border-radius: 50px; font-size: 0.8rem;
+    font-family: 'DM Sans', sans-serif; letter-spacing: 0.5px; cursor: pointer; font-weight: 500;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: #d4893f; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+  .hamburger span { width: 24px; height: 2px; background: white; border-radius: 2px; transition: all 0.3s; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--espresso);
+    min-height: 88vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 4rem 5rem; gap: 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 420px; height: 420px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,125,59,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(212,168,83,0.18); border: 1px solid rgba(212,168,83,0.4);
+    color: var(--gold); font-size: 0.75rem; letter-spacing: 2px;
+    text-transform: uppercase; padding: 6px 16px; border-radius: 50px; margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 4.5vw, 4rem); color: white; line-height: 1.15; margin-bottom: 1.2rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub { color: rgba(255,255,255,0.6); font-size: 1rem; line-height: 1.7; max-width: 400px; margin-bottom: 2rem; }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--caramel); color: white; border: none;
+    padding: 14px 32px; border-radius: 50px; font-size: 0.9rem;
+    font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: #d4893f; transform: translateY(-1px); }
+  .btn-outline {
+    color: white; border: 1px solid rgba(255,255,255,0.3); background: transparent;
+    padding: 14px 28px; border-radius: 50px; font-size: 0.9rem;
+    font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-rating { display: flex; align-items: center; gap: 10px; margin-top: 2rem; }
+  .stars { color: var(--gold); font-size: 1rem; letter-spacing: 2px; }
+  .rating-text { color: rgba(255,255,255,0.5); font-size: 0.82rem; }
+  .rating-num { color: white; font-weight: 500; }
+  .hero-visual { display: flex; align-items: center; justify-content: center; }
+
+  /* ── INFO STRIP ── */
+  .info-strip {
+    background: var(--caramel);
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem 4rem; padding: 1.2rem 2rem;
+  }
+  .info-item { display: flex; align-items: center; gap: 8px; color: white; font-size: 0.85rem; }
+
+  /* ── SECTIONS ── */
+  .section { padding: 6rem 5rem; }
+  .section-label { font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--caramel); margin-bottom: 0.8rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.2; margin-bottom: 1.2rem; }
+  .section-body { color: var(--steam); line-height: 1.8; font-size: 0.95rem; max-width: 480px; }
+
+  /* ── ABOUT ── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+  .stat-card { background: var(--espresso); border-radius: 16px; padding: 1.5rem; text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--gold); display: block; }
+  .stat-label { color: rgba(255,255,255,0.55); font-size: 0.8rem; letter-spacing: 0.5px; margin-top: 4px; display: block; }
+  .beans-visual { display: flex; align-items: center; justify-content: center; }
+
+  /* ── MENU ── */
+  .menu-section { background: var(--espresso); padding: 6rem 5rem; }
+  .menu-section .section-title { color: white; }
+  .menu-section .section-label { color: var(--gold); }
+  .menu-section .section-body { color: rgba(255,255,255,0.5); }
+  .menu-tabs { display: flex; gap: 0.5rem; margin: 2.5rem 0; flex-wrap: wrap; }
+  .tab-btn {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6); padding: 8px 20px; border-radius: 50px;
+    font-size: 0.83rem; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s;
+  }
+  .tab-btn.active, .tab-btn:hover { background: var(--caramel); border-color: var(--caramel); color: white; }
+  .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .menu-card {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px; padding: 1.5rem; transition: transform 0.2s, border-color 0.2s; cursor: pointer;
+  }
+  .menu-card:hover { transform: translateY(-4px); border-color: rgba(196,125,59,0.4); }
+  .menu-emoji { font-size: 2rem; margin-bottom: 0.8rem; display: block; }
+  .menu-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: white; margin-bottom: 0.4rem; }
+  .menu-desc { font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.5; margin-bottom: 1rem; }
+  .menu-price { color: var(--gold); font-weight: 500; font-size: 0.9rem; }
+  .menu-item-hidden { display: none; }
+  .menu-item-hidden.visible { display: block; }
+
+  /* ── REVIEWS ── */
+  .reviews-section { padding: 6rem 5rem; background: var(--light); }
+  .reviews-header { text-align: center; max-width: 580px; margin: 0 auto 3rem; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .review-card { background: white; border: 1px solid rgba(92,51,23,0.1); border-radius: 16px; padding: 1.5rem; }
+  .review-stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 0.8rem; }
+  .review-text { font-size: 0.88rem; color: var(--steam); line-height: 1.7; font-style: italic; margin-bottom: 1.2rem; }
+  .reviewer { font-size: 0.8rem; font-weight: 500; color: var(--espresso); }
+  .rating-summary {
+    text-align: center; margin-top: 2.5rem;
+  }
+  .rating-pill {
+    display: inline-flex; align-items: center; gap: 16px;
+    background: white; border: 1px solid rgba(92,51,23,0.12);
+    border-radius: 50px; padding: 12px 28px;
+  }
+  .big-num { font-size: 2rem; font-family: 'Playfair Display', serif; color: var(--espresso); font-weight: 700; }
+  .small-stars { color: var(--gold); font-size: 1rem; letter-spacing: 3px; }
+  .review-count { font-size: 0.78rem; color: var(--steam); }
+
+  /* ── HOURS & CONTACT ── */
+  .visit-section {
+    background: var(--espresso); padding: 6rem 5rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+  .visit-section .section-label { color: var(--gold); }
+  .visit-section .section-title { color: white; }
+  .hours-table { margin-top: 1.5rem; }
+  .hours-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 0.88rem;
+  }
+  .hours-day { color: rgba(255,255,255,0.6); }
+  .hours-time { color: #6EBC7A; font-weight: 500; }
+  .contact-info { margin-top: 2rem; }
+  .contact-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1.4rem; }
+  .contact-icon { font-size: 1.1rem; margin-top: 2px; flex-shrink: 0; }
+  .contact-label { font-size: 0.75rem; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
+  .contact-val { color: white; font-size: 0.9rem; line-height: 1.6; }
+
+  /* ── MAP PLACEHOLDER ── */
+  .map-box {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px; height: 200px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 12px; margin-top: 1.5rem;
+    cursor: pointer; transition: border-color 0.2s;
+  }
+  .map-box:hover { border-color: rgba(196,125,59,0.4); }
+  .map-box-icon { font-size: 2rem; }
+  .map-box-text { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1a0f07; padding: 3rem 5rem;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); }
+  .footer-tagline { color: rgba(255,255,255,0.3); font-size: 0.8rem; margin-top: 4px; }
+  .footer-copy { color: rgba(255,255,255,0.3); font-size: 0.78rem; }
+
+  /* ── ANIMATIONS ── */
+  .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 3rem 2rem; text-align: center; }
+    .hero-sub { max-width: 100%; }
+    .hero-actions { justify-content: center; }
+    .hero-rating { justify-content: center; }
+    .hero-visual { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .beans-visual { display: none; }
+    .menu-grid { grid-template-columns: 1fr 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .visit-section { grid-template-columns: 1fr; gap: 3rem; }
+    .section { padding: 4rem 2rem; }
+    .menu-section { padding: 4rem 2rem; }
+    .reviews-section { padding: 4rem 2rem; }
+    .visit-section { padding: 4rem 2rem; }
+    footer { padding: 2rem; flex-direction: column; text-align: center; }
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .nav-mobile { display: none; flex-direction: column; background: var(--espresso); padding: 1rem 1.5rem; gap: 1rem; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  }
+  @media (max-width: 560px) {
+    .menu-grid { grid-template-columns: 1fr; }
+    .stat-row { grid-template-columns: 1fr 1fr; }
+    .info-strip { flex-direction: column; gap: 0.8rem; align-items: flex-start; padding: 1.2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Robusta</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#visit">Visit Us</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('visit').scrollIntoView({behavior:'smooth'})">Find Us</button>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#menu" onclick="closeMenu()">Menu</a>
+  <a href="#reviews" onclick="closeMenu()">Reviews</a>
+  <a href="#visit" onclick="closeMenu()">Visit Us</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">☕ Hinjawadi's Finest</div>
+    <h1>Every Cup is a<br><em>Crafted Story</em></h1>
+    <p class="hero-sub">Nestled behind Persistent in Hinjawadi Phase 1, Robusta Cafe serves bold flavors, artisan shakes, and warm moments — open every day, 9 am to 10 pm.</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">Explore Menu</a>
+      <a href="https://maps.google.com/?q=Robusta+Cafe+Hinjawadi+Pune" target="_blank" class="btn-outline">Get Directions</a>
+    </div>
+    <div class="hero-rating">
+      <span class="stars">★★★★★</span>
+      <span class="rating-num">4.9</span>
+      <span class="rating-text">· 36 reviews on Google</span>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <svg viewBox="0 0 320 320" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="160" cy="160" r="140" fill="none" stroke="rgba(196,125,59,0.15)" stroke-width="1"/>
+      <circle cx="160" cy="160" r="115" fill="none" stroke="rgba(196,125,59,0.08)" stroke-width="0.5"/>
+      <polygon points="85,150 100,245 220,245 235,150" fill="#4A2410"/>
+      <rect x="85" y="148" width="150" height="4" rx="2" fill="#3D1F0A"/>
+      <ellipse cx="160" cy="248" rx="90" ry="12" fill="#5C3317"/>
+      <ellipse cx="160" cy="244" rx="82" ry="9" fill="#3D1F0A"/>
+      <path d="M235,175 Q270,175 270,205 Q270,235 235,235" fill="none" stroke="#5C3317" stroke-width="14" stroke-linecap="round"/>
+      <path d="M235,175 Q268,175 268,205 Q268,233 235,233" fill="none" stroke="#2C1A0E" stroke-width="8" stroke-linecap="round"/>
+      <ellipse cx="160" cy="150" rx="75" ry="18" fill="#6B3A1A"/>
+      <ellipse cx="160" cy="150" rx="65" ry="13" fill="#8B4A20"/>
+      <ellipse cx="160" cy="150" rx="30" ry="8" fill="rgba(255,220,150,0.22)"/>
+      <path d="M130,126 Q135,113 130,100" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M160,118 Q165,103 160,88" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M190,126 Q185,113 190,100" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="160" y="225" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="rgba(212,168,83,0.45)" letter-spacing="3">ROBUSTA</text>
+    </svg>
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-item">📍 Behind Persistent, Hinjawadi Phase 1</div>
+  <div class="info-item">🕘 Open Daily: 9 AM – 10 PM</div>
+  <div class="info-item">💰 ₹1 – ₹200 per person</div>
+  <div class="info-item">📞 084858 07162</div>
+</div>
+
+<!-- ABOUT -->
+<section class="section about-grid" id="about">
+  <div class="fade-up">
+    <div class="section-label">Our Story</div>
+    <h2 class="section-title">Where Good Coffee<br>Meets Great Company</h2>
+    <p class="section-body">Robusta Cafe was born with one simple belief — that a great cup of coffee can change the tone of your whole day. Located in the heart of Hinjawadi's tech hub, we're the go-to spot for developers, dreamers, and everyone in between.<br><br>From rich espressos to velvety shakes and freshly prepared Tawa Pulao, our menu is crafted with quality and soul — all at prices that make every day feel like a treat.</p>
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-num">4.9</span>
+        <span class="stat-label">Google Rating</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">36+</span>
+        <span class="stat-label">Happy Reviews</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">7</span>
+        <span class="stat-label">Days a Week</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">₹200</span>
+        <span class="stat-label">Budget Friendly</span>
+      </div>
+    </div>
+  </div>
+  <div class="beans-visual fade-up">
+    <svg viewBox="0 0 340 380" width="100%" style="max-width:320px" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="170" cy="190" r="150" fill="#F0E8D8"/>
+      <g transform="translate(100,80) rotate(-20)">
+        <ellipse cx="0" cy="0" rx="40" ry="25" fill="#5C3317"/>
+        <path d="M0,-24 Q0,0 0,24" stroke="#3D1F0A" stroke-width="2.5" fill="none"/>
+        <path d="M-20,-10 Q0,0 20,-10" stroke="#3D1F0A" stroke-width="1.5" fill="none"/>
+      </g>
+      <g transform="translate(220,100) rotate(15)">
+        <ellipse cx="0" cy="0" rx="35" ry="22" fill="#7A4520"/>
+        <path d="M0,-21 Q0,0 0,21" stroke="#4A2A10" stroke-width="2" fill="none"/>
+      </g>
+      <g transform="translate(130,200) rotate(30)">
+        <ellipse cx="0" cy="0" rx="45" ry="28" fill="#4A2A12"/>
+        <path d="M0,-27 Q0,0 0,27" stroke="#2C1A0A" stroke-width="2.5" fill="none"/>
+        <path d="M-22,-12 Q0,0 22,-12" stroke="#2C1A0A" stroke-width="1.5" fill="none"/>
+      </g>
+      <g transform="translate(230,230) rotate(-10)">
+        <ellipse cx="0" cy="0" rx="30" ry="19" fill="#6B3A18"/>
+        <path d="M0,-18 Q0,0 0,18" stroke="#3D1F0A" stroke-width="2" fill="none"/>
+      </g>
+      <g transform="translate(160,310) rotate(5)">
+        <ellipse cx="0" cy="0" rx="36" ry="22" fill="#5C3317"/>
+        <path d="M0,-21 Q0,0 0,21" stroke="#3D1F0A" stroke-width="2" fill="none"/>
+      </g>
+      <text x="170" y="175" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#5C3317" letter-spacing="2">ARABICA</text>
+      <text x="170" y="196" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8B6B4A">ROBUSTA</text>
+      <text x="170" y="213" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="rgba(92,51,23,0.45)" letter-spacing="3">BLEND</text>
+    </svg>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="fade-up">
+    <div class="section-label">What We Serve</div>
+    <h2 class="section-title">Our Signature Menu</h2>
+    <p class="section-body">Handcrafted drinks and bites made with love. Budget-friendly, quality-first.</p>
+  </div>
+  <div class="menu-tabs">
+    <button class="tab-btn active" data-filter="all">All</button>
+    <button class="tab-btn" data-filter="hot">Hot Drinks</button>
+    <button class="tab-btn" data-filter="cold">Cold Drinks</button>
+    <button class="tab-btn" data-filter="shakes">Shakes</button>
+    <button class="tab-btn" data-filter="food">Food</button>
+  </div>
+  <div class="menu-grid" id="menuGrid">
+    <div class="menu-card" data-category="hot">
+      <span class="menu-emoji">☕</span>
+      <div class="menu-name">Classic Espresso</div>
+      <div class="menu-desc">Bold single-origin espresso pulled fresh for a rich, concentrated experience.</div>
+      <div class="menu-price">From ₹60</div>
+    </div>
+    <div class="menu-card" data-category="hot">
+      <span class="menu-emoji">🍵</span>
+      <div class="menu-name">Cappuccino</div>
+      <div class="menu-desc">Perfectly balanced espresso and steamed milk with velvety microfoam on top.</div>
+      <div class="menu-price">From ₹80</div>
+    </div>
+    <div class="menu-card" data-category="hot">
+      <span class="menu-emoji">☕</span>
+      <div class="menu-name">Café Latte</div>
+      <div class="menu-desc">Smooth espresso blended with silky steamed milk — warm comfort in every sip.</div>
+      <div class="menu-price">From ₹90</div>
+    </div>
+    <div class="menu-card" data-category="cold">
+      <span class="menu-emoji">🧋</span>
+      <div class="menu-name">Cold Brew</div>
+      <div class="menu-desc">18-hour cold-steeped coffee — smooth, low-acid, and full of depth.</div>
+      <div class="menu-price">From ₹100</div>
+    </div>
+    <div class="menu-card" data-category="cold">
+      <span class="menu-emoji">🥤</span>
+      <div class="menu-name">Iced Americano</div>
+      <div class="menu-desc">Espresso over ice with chilled water — clean, bold, and refreshing.</div>
+      <div class="menu-price">From ₹90</div>
+    </div>
+    <div class="menu-card" data-category="shakes">
+      <span class="menu-emoji">🥤</span>
+      <div class="menu-name">Signature Shakes</div>
+      <div class="menu-desc">Thick, creamy shakes in seasonal flavors. Fan favorite every single day.</div>
+      <div class="menu-price">From ₹120</div>
+    </div>
+    <div class="menu-card" data-category="food">
+      <span class="menu-emoji">🍱</span>
+      <div class="menu-name">Tawa Pulao Rice</div>
+      <div class="menu-desc">Our bestselling street-style rice — spicy, fragrant, satisfyingly hearty.</div>
+      <div class="menu-price">From ₹100</div>
+    </div>
+    <div class="menu-card" data-category="cold">
+      <span class="menu-emoji">🧃</span>
+      <div class="menu-name">Fresh Juices</div>
+      <div class="menu-desc">Freshly squeezed and blended juices — a healthy companion to your break.</div>
+      <div class="menu-price">From ₹70</div>
+    </div>
+    <div class="menu-card" data-category="food">
+      <span class="menu-emoji">🥪</span>
+      <div class="menu-name">Snacks & Bites</div>
+      <div class="menu-desc">Quick bites to go alongside your cup — perfect for those in-between moments.</div>
+      <div class="menu-price">From ₹50</div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section" id="reviews">
+  <div class="reviews-header fade-up">
+    <div class="section-label">What People Say</div>
+    <h2 class="section-title">Loved by the Hinjawadi Community</h2>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card fade-up">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"It is a very good place to have wonderful, tasty coffee. The ambiance is cozy and the staff is always welcoming."</p>
+      <div class="reviewer">— Google Reviewer</div>
+    </div>
+    <div class="review-card fade-up">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Great coffee variety and friendly staff. Every visit feels like a warm hug after a long meeting!"</p>
+      <div class="reviewer">— Google Reviewer</div>
+    </div>
+    <div class="review-card fade-up">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Good quality, amazing shakes! Easily the best quick break spot in all of Hinjawadi Phase 1. Will keep coming back."</p>
+      <div class="reviewer">— Google Reviewer</div>
+    </div>
+  </div>
+  <div class="rating-summary">
+    <div class="rating-pill">
+      <span class="big-num">4.9</span>
+      <div>
+        <div class="small-stars">★★★★★</div>
+        <div class="review-count">Based on 36 Google reviews</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section class="visit-section" id="visit">
+  <div class="fade-up">
+    <div class="section-label">Opening Hours</div>
+    <h2 class="section-title">Open Every Day</h2>
+    <div class="hours-table">
+      <div class="hours-row"><span class="hours-day">Monday</span><span class="hours-time">9:00 AM – 10:00 PM</span></div>
+      <div class="hours-row"><span class="hours-day">Tuesday</span><span class="hours-time">9:00 AM – 10:00 PM</span></div>
+      <div class="hours-row"><span class="hours-day">Wednesday</span><span class="hours-time">9:00 AM – 10:00 PM</span></div>
+      <div class="hours-row"><span class="hours-day">Thursday</span><span class="hours-time">9:00 AM – 10:00 PM</span></div>
+      <div class="hours-row"><span class="hours-day">Friday</span><span class="hours-time">9:00 AM – 10:00 PM</span></div>
+      <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">9:00 AM – 10:00 PM</span></div>
+      <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">9:00 AM – 10:00 PM</span></div>
+    </div>
+  </div>
+  <div class="fade-up">
+    <div class="section-label">Find Us</div>
+    <h2 class="section-title">We're Easy to Find</h2>
+    <div class="contact-info">
+      <div class="contact-item">
+        <span class="contact-icon">📍</span>
+        <div>
+          <div class="contact-label">Address</div>
+          <div class="contact-val">Behind Persistent, Near Shreenath Food Court<br>Phase 1, Hinjawadi Rajiv Gandhi Infotech Park<br>Hinjawadi, Maharashtra 411057</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">📞</span>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-val"><a href="tel:08485807162" style="color:white;text-decoration:none;">084858 07162</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">💰</span>
+        <div>
+          <div class="contact-label">Price Range</div>
+          <div class="contact-val">₹1 – ₹200 per person</div>
+        </div>
+      </div>
+    </div>
+    <a href="https://maps.google.com/?q=Robusta+Cafe+Hinjawadi+Pune" target="_blank" class="btn-primary" style="margin-top:1.5rem; display:inline-block;">📍 Open in Google Maps</a>
+    <div class="map-box" onclick="window.open('https://maps.google.com/?q=Robusta+Cafe+Hinjawadi+Pune','_blank')">
+      <div class="map-box-icon">🗺️</div>
+      <div class="map-box-text">Click to view on Google Maps</div>
+      <div style="font-size:0.75rem; color:rgba(255,255,255,0.3);">Hinjawadi Phase 1, Pune</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Robusta Cafe</div>
+    <div class="footer-tagline">Every cup tells a story.</div>
+  </div>
+  <div class="footer-copy">© 2025 Robusta Cafe · Hinjawadi, Pune</div>
+</footer>
+
+<script>
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const navMobile = document.getElementById('navMobile');
+  hamburger.addEventListener('click', () => navMobile.classList.toggle('open'));
+  function closeMenu() { navMobile.classList.remove('open'); }
+
+  // Menu filter tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter');
+      document.querySelectorAll('.menu-card').forEach(card => {
+        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Scroll fade-in animations
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.15 });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // Smooth nav active state
+  const sections = document.querySelectorAll('section[id], div[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.getAttribute('id'); });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? '#D4A853' : '';
+    });
+  });
+</script>
+</body>
+</html>
